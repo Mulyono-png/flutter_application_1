@@ -1,55 +1,124 @@
+import 'package:flutter_application_1/component/custom_textfield.dart';
+import 'package:flutter_application_1/controllers/kalkulatorControler.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:flutter_application_1/component/custom_button.dart';
 
-void main() => runApp(const MaterialApp(home: KalkulatorSimpels()));
+class CalculatorPage extends StatelessWidget {
+  CalculatorPage({super.key});
 
-class KalkulatorSimpels extends StatefulWidget {
-  const KalkulatorSimpels({super.key});
-
-  @override
-  State<KalkulatorSimpels> createState() => _KalkulatorSimpelsState();
-}
-
-class _KalkulatorSimpelsState extends State<KalkulatorSimpels> {
-  final TextEditingController _txt1 = TextEditingController();
-  final TextEditingController _txt2 = TextEditingController();
-  String _hasil = "0";
-
-  void _hitung(String op) {
-    double a = double.tryParse(_txt1.text) ?? 0;
-    double b = double.tryParse(_txt2.text) ?? 0;
-    
-    setState(() {
-      if (op == "+") _hasil = "${a + b}";
-      if (op == "-") _hasil = "${a - b}";
-      if (op == "x") _hasil = "${a * b}";
-      if (op == "÷") _hasil = b != 0 ? "${a / b}" : "Tidak bisa dibagi 0";
-    });
-  }
+  final controller = Get.put(KalkulatorController());
+  // menyambingkan page dan controller
 
   @override
-  Widget build(BuildContext context) {
+ Widget build(BuildContext context) {
+    TextEditingController txtangka1 = TextEditingController();
+    TextEditingController txtangka2 = TextEditingController();
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Kalkulator")),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            TextField(controller: _txt1, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: "Angka Pertama")),
-            TextField(controller: _txt2, keyboardType: TextInputType.number, decoration: const InputDecoration(labelText: "Angka Kedua")),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ElevatedButton(onPressed: () => _hitung("+"), child: const Text("+")),
-                ElevatedButton(onPressed: () => _hitung("-"), child: const Text("-")),
-                ElevatedButton(onPressed: () => _hitung("x"), child: const Text("x")),
-                ElevatedButton(onPressed: () => _hitung("÷"), child: const Text("÷")),
-              ],
+      appBar: AppBar(
+        title: const Text("My Kalkulator Page"),
+      ),
+      body: Column(
+        children: [
+          CustomTextfield(
+            myHint: "Masukkan Angka 1",
+            txtController: txtangka1,
+          ),
+
+          CustomTextfield(
+            myHint: "Masukkan Angka 2",
+            txtController: txtangka2,
+          ),
+
+          CustomButton(
+            text: "Tambah",
+            onPressed: () {
+              if (txtangka1.text.isEmpty || txtangka2.text.isEmpty) {
+                Get.snackbar(
+                  "Peringatan",
+                  "Angka 1 dan Angka 2 harus diisi",
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+                return;
+              }
+
+              controller.tambah(
+                double.parse(txtangka1.text),
+                double.parse(txtangka2.text),
+              );
+            },
+          ),
+
+          CustomButton(
+            text: "Kurang",
+            onPressed: () {
+              if (txtangka1.text.isEmpty || txtangka2.text.isEmpty) {
+                Get.snackbar(
+                  "Peringatan",
+                  "Angka 1 dan Angka 2 harus diisi",
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+                return;
+              }
+
+              controller.kurang(
+                double.parse(txtangka1.text),
+                double.parse(txtangka2.text),
+              );
+            },
+          ),
+
+          CustomButton(
+            text: "Kali",
+            onPressed: () {
+              if (txtangka1.text.isEmpty || txtangka2.text.isEmpty) {
+                Get.snackbar(
+                  "Peringatan",
+                  "Angka 1 dan Angka 2 harus diisi",
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+                return;
+              }
+
+              controller.kali(
+                double.parse(txtangka1.text),
+                double.parse(txtangka2.text),
+              );
+            },
+          ),
+
+          CustomButton(
+            text: "Bagi",
+            onPressed: () {
+              if (txtangka1.text.isEmpty || txtangka2.text.isEmpty) {
+                Get.snackbar(
+                  "Peringatan",
+                  "Angka 1 dan Angka 2 harus diisi",
+                  snackPosition: SnackPosition.BOTTOM,
+                );
+                return;
+              }
+
+              controller.bagi(
+                double.parse(txtangka1.text),
+                double.parse(txtangka2.text),
+              );
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          Obx(
+            () => Text(
+              "Hasil : ${controller.hasilHitung}",
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            const SizedBox(height: 30),
-            Text("Hasil: $_hasil", style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class CustomTextField extends StatelessWidget {
-  final String hint;
+class CustomTextfield extends StatelessWidget {
+  final String myHint;
   final TextEditingController txtController;
-  final bool isPassword; // 1. Tambahkan variabel ini
 
-  const CustomTextField({
+  const CustomTextfield({
     super.key,
-    required this.hint,
+    required this.myHint,
     required this.txtController,
-    this.isPassword = false, // 2. Tambahkan parameter opsional ini (default false)
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: txtController,
-      obscureText: isPassword, // 3. Gunakan isPassword di obscureText
+      keyboardType: TextInputType.number,
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
       decoration: InputDecoration(
-        hintText: hint,
+        hint: Text(myHint),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         ),
