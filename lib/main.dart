@@ -1,5 +1,8 @@
+import 'package:flutter_application_1/kalkulator.dart';
+import 'package:flutter_application_1/login_page.dart';
+import 'package:flutter_application_1/routes.dart';
 import 'package:flutter/material.dart';
-import 'Login_page.dart'; // Mengimpor halaman login milikmu
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,16 +11,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Aplikasi Login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      // Di sini kita tentukan halaman pertamanya adalah LoginPage
-      home: const LoginPage(),
+    return GetMaterialApp(
+      title: "Belajar Flutter GetX",
+      initialRoute: Routes.registraion,
+      getPages: Routes.myPages,
     );
   }
 }
