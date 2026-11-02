@@ -3,7 +3,6 @@ class MakananModel {
   final String harga;
   final String rating;
   final String deskripsi;
-  final String bahanUtama;
   final String gambar;
   final String review;
 
@@ -12,7 +11,6 @@ class MakananModel {
     required this.harga,
     required this.rating,
     required this.deskripsi,
-    required this.bahanUtama,
     required this.gambar,
     required this.review,
   });

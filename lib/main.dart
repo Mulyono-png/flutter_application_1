@@ -1,5 +1,3 @@
-import 'package:flutter_application_1/kalkulator.dart';
-import 'package:flutter_application_1/login_page.dart';
 import 'package:flutter_application_1/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: "Belajar Flutter",
-      initialRoute: Routes.list_makanan,
+      initialRoute: Routes.login,
       getPages: Routes.myPages,
     );
   }
